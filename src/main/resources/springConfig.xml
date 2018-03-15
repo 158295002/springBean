@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="sgtPeppers" class="com.evada.annotationConfig.SgtPeppers"/>
+    <!--方式一-->
+    <bean id = "blackDisc" class="com.evada.xmlConfig.BlackDisc">
+        <constructor-arg ref="sgtPeppers"/>
+        <constructor-arg value="某人"/>
+        <constructor-arg>
+           <list>
+               <value>1</value>
+               <value>2</value>
+               <value>3</value>
+           </list>
+        </constructor-arg>
+        <property name="setArg" value="setArg"/>
+    </bean>
+    <!--方式二  但针对集合的参数无法实现配置-->
+    <!--<bean class="com.evada.model.BlackDisc" c:_0="sgtPeppers" c:artist="某人">-->
+    <!--</bean>-->
+    <util:properties id="apple" location="classpath:apple.properties" />
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 加载属性的配置文件 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
+            <array>
+                <value>classpath:apple.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="apple" class="com.evada.spEl.Apple">
+        <!--读取上面的属性配置文件信息-->
+        <property name="id" value="${aid}"/>
+        <property name="name" value="${name}"/>
+    </bean>
+
+    <bean id="appleAspect" class="com.evada.xmlAop.XMLAroundAspect"/>
+    <!--定义切面-->
+    <aop:config>
+        <aop:aspect ref="appleAspect">
+            <aop:pointcut id="washPoint" expression="execution(* com.evada.model.Fruit.wash(..))"></aop:pointcut>
+            <aop:around pointcut-ref="washPoint" method="aroundAspect"/>
+        </aop:aspect>
+    </aop:config>
+    <!--<aop:aspectj-autoproxy/>-->
+
+</beans>
